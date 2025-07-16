@@ -1,0 +1,28 @@
+<?php
+
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\TransactionsController;
+use App\Http\Controllers\UsersController;
+use Illuminate\Support\Facades\Route;
+
+Route::get('/', fn() => view('welcome'));
+
+Route::get('/register', fn() => view('auth.register'))->name('register');
+Route::post('/register', [AuthController::class, 'register']);
+
+Route::get('/login', fn() => view('auth.login'))->name('login');
+Route::post('/login', [AuthController::class, 'login']);
+
+Route::middleware('auth')->group(function () {
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+    Route::get('/me', fn () => view('app.profile.index'))->name('profile.index'); 
+    Route::patch('/me/profile-picture', [UsersController::class, 'updateProfilePicture'])->name('profile.picture.update');
+    
+    Route::get('/transactions', [TransactionsController::class, 'index'])->name('transactions.index'); 
+    Route::get('/transactions/new', fn () => view('app.transactions.new'))->name('transactions.create');
+    Route::post('/transactions', [TransactionsController::class, 'store'])->name('transactions.store'); 
+   
+    Route::get('/logout', [AuthController::class, 'logout'])->name('logout');  
+});
