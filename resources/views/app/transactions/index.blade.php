@@ -32,17 +32,17 @@
         @if ($transactions_paginated->hasPages())
             <ul class="pagination flex justify-between">
                 @if ($transactions_paginated->onFirstPage())
-                    <li class="disabled font-poppins bg-[#EFF1F3] font-medium inline-block w-max px-6 py-2 rounded-xl hover:scale-95 transaction duration-150"><span>{{ __('<') }}</span></li>
+                    <li class="disabled flex justify-center items-center font-mono bg-[#2c18b068] text-white font-bold w-10 h-10 rounded-lg hover:scale-95 transaction duration-150"><span>{{ __('<') }}</span></li>
                 @else
-                    <li><a class="font-poppins bg-[#dadee2] font-medium inline-block w-max px-6 py-2 rounded-xl hover:scale-95 transaction duration-150" href="{{ $transactions_paginated->previousPageUrl() }}" rel="prev">{{ __('<') }}</a></li>
+                    <li><a class="flex justify-center items-center font-mono bg-[#2C18B0] text-white font-bold w-10 h-10 rounded-lg hover:scale-95 transaction duration-150" href="{{ $transactions_paginated->previousPageUrl() }}" rel="prev">{{ __('<') }}</a></li>
                 @endif
                 
                 {{ "Page " . $transactions_paginated->currentPage() . "  of  " . $transactions_paginated->lastPage() }}
             
                 @if ($transactions_paginated->hasMorePages())
-                    <li><a class="font-poppins bg-[#dadee2] font-medium inline-block w-max px-6 py-2 rounded-xl hover:scale-95 transaction duration-150" href="{{ $transactions_paginated->nextPageUrl() }}" rel="next">{{ __('>') }}</a></li>
+                    <li><a class="flex justify-center items-center font-mono bg-[#2C18B0] text-white font-bold w-10 h-10 rounded-lg hover:scale-95 transaction duration-150" href="{{ $transactions_paginated->nextPageUrl() }}" rel="next">{{ __('>') }}</a></li>
                 @else
-                    <li class="disabled font-poppins bg-[#EFF1F3] font-medium inline-block w-max px-6 py-2 rounded-xl hover:scale-95 transaction duration-150"><span>{{ __('>') }}</span></li>
+                    <li class="disabled flex justify-center items-center font-mono bg-[#2c18b068] text-white font-bold w-10 h-10 rounded-lg hover:scale-95 transaction duration-150"><span>{{ __('>') }}</span></li>
                 @endif
             </ul>
         @endif
