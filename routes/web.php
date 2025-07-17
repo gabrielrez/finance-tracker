@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\TransactionsController;
 use App\Http\Controllers\UsersController;
@@ -17,12 +18,15 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::middleware('auth')->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-    Route::get('/me', fn () => view('app.profile.index'))->name('profile.index'); 
+    Route::get('/me', fn() => view('app.profile.index'))->name('profile.index');
     Route::patch('/me/profile-picture', [UsersController::class, 'updateProfilePicture'])->name('profile.picture.update');
-    
-    Route::get('/transactions', [TransactionsController::class, 'index'])->name('transactions.index'); 
-    Route::get('/transactions/new', fn () => view('app.transactions.new'))->name('transactions.create');
-    Route::post('/transactions', [TransactionsController::class, 'store'])->name('transactions.store'); 
-   
-    Route::get('/logout', [AuthController::class, 'logout'])->name('logout');  
+
+    Route::get('/categories', fn() => view('app.categories.new'))->name('categories.create');
+    Route::post('/categories', [CategoriesController::class, 'store'])->name('categories.store');
+
+    Route::get('/transactions', [TransactionsController::class, 'index'])->name('transactions.index');
+    Route::get('/transactions/new', fn() => view('app.transactions.new'))->name('transactions.create');
+    Route::post('/transactions', [TransactionsController::class, 'store'])->name('transactions.store');
+
+    Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 });

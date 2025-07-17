@@ -19,21 +19,21 @@ class TransactionsController extends Controller
 
     public function index()
     {
-        $search = request()->query('search') ?? null;
-        $from = request('from') ? Carbon::parse(request('from')) : null;
-        $to = request('to') ? Carbon::parse(request('to')) : null;
+        $transactions_paginated = user()
+            ->transactions()
+            ->with('category')
+            ->latest('date')
+            ->paginate(12);
 
-        $transactions = $this->transactionService->filter(user(), $search, $from, $to);
-
-        $grouped_transactions = $transactions->groupBy(function ($transaction) {
-            return Carbon::parse($transaction->date)->format('Y-m-d');
-        });
+        $grouped_transactions = $transactions_paginated
+            ->getCollection()
+            ->groupBy(fn($transaction) => Carbon::parse($transaction->date)->format('Y-m-d'))
+            ->map(fn($group) => $group->sortByDesc('created_at'))
+            ->sortKeysDesc();
 
         return view('app.transactions.index', [
             'grouped_transactions' => $grouped_transactions,
-            'search' => $search,
-            'from' => $from,
-            'to' => $to,
+            'transactions_paginated' => $transactions_paginated,
         ]);
     }
 
@@ -53,7 +53,7 @@ class TransactionsController extends Controller
             'amount' => ['required', 'numeric', 'min:0'],
         ]);
 
-        $attributes['amount'] = (int) round($attributes['amount'] * 100);
+        $attributes['amount'] = intval(round($attributes['amount'] * 100));
         $attributes['user_id'] = user()->id;
 
         Transaction::create($attributes);

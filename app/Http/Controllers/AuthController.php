@@ -17,10 +17,12 @@ class AuthController extends Controller
         ]);
 
         $user = User::create($attributes);
+
+        // TODO: Implement a shared categories system accessible by all users
         $user->categories()->create([
             'name' => 'Default'
         ]);
-        
+
         Auth::login($user);
 
         return redirect('/home');

@@ -69,33 +69,4 @@ class TransactionService
             'balance' => $balance,
         ];
     }
-
-
-
-    /**
-     * Filter transactions for a given user.
-     * 
-     * @param User $user
-     * @param string|null $search
-     * @return Collection
-     */
-    public function filter(User $user, ?string $search = null, ?string $from = null, ?string $to = null): Collection
-    {
-        $query = $user->transactions()->with('category');
-
-        if ($search) {
-            $query->where(function ($query) use ($search) {
-                $query->where('description', 'like', '%' . $search . '%')
-                    ->orWhereHas('category', function ($category) use ($search) {
-                        $category->where('name', 'like', '%' . $search . '%');
-                    });
-            });
-        }
-
-        if ($from && $to) {
-            $query->whereBetween('date', [$from, $to]);
-        }
-
-        return $query->latest('created_at')->get();
-    }
 }

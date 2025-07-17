@@ -36,7 +36,7 @@
             <div class="mt-8">
                 <div class="flex justify-between items-baseline">
                     <label class="block font-semibold text-base text-[#9D9EA2]" for="category_id">Category</label>
-                    <a href="#" class="inline-block text-sm underline text-[#9D9EA2] mt-2 text-right">Add Category +</a>
+                    <a href="{{ route('categories.create') }}" class="inline-block text-sm underline text-[#9D9EA2] mt-2 text-right">Add Category +</a>
                 </div>
                 <select class="text-[#1E1E1E] border-2 bg-[#EFF1F3] border-[#dadee2] px-2 mt-2.5 w-full min-h-12 h-full rounded-2xl hover:bg-[#dadee2] duration-150" name="category_id" required>
                     @foreach (user()->categories as $category) 

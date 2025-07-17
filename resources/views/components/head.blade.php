@@ -10,4 +10,4 @@
   @vite('resources/css/app.css')
 </head>
 
-<body class="bg-white text-[#1E1E1E] font-roboto">
+<body class="bg-white text-[#1E1E1E] font-roboto mb-10">
