@@ -23,10 +23,13 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/categories', fn() => view('app.categories.new'))->name('categories.create');
     Route::post('/categories', [CategoriesController::class, 'store'])->name('categories.store');
+    Route::delete('/categories/{id}', [CategoriesController::class, 'delete'])->name('categories.delete');
 
     Route::get('/transactions', [TransactionsController::class, 'index'])->name('transactions.index');
+    Route::get('/transactions/{id}', [TransactionsController::class, 'show']);
     Route::get('/transactions/new', fn() => view('app.transactions.new'))->name('transactions.create');
     Route::post('/transactions', [TransactionsController::class, 'store'])->name('transactions.store');
+    Route::delete('/transactions/{id}', [TransactionsController::class, 'delete'])->name('transactions.delete'); 
 
     Route::get('/logout', [AuthController::class, 'logout'])->name('logout');
 });

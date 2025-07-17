@@ -18,4 +18,13 @@ class CategoriesController extends Controller
 
         return redirect()->route('transactions.create');
     }
+
+
+
+    public function delete(int $id)
+    {
+        Category::findOrFail($id)->delete();
+
+        return redirect()->route('categories.index');
+    }
 }

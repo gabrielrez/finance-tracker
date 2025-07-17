@@ -35,6 +35,17 @@ class TransactionsController extends Controller
 
 
 
+    public function show(int $id)
+    {
+        $transaction = Transaction::findOrFail($id);
+        
+        return view('app.transactions.show', [
+            'transaction' => $transaction,
+        ]);
+    }
+
+
+
     public function store()
     {
         request()->merge([
@@ -55,5 +66,14 @@ class TransactionsController extends Controller
         Transaction::create($attributes);
 
         return redirect()->route('home');
+    }
+
+
+
+    public function delete(int $id)
+    {
+        Transaction::findOrFail($id)->delete();
+
+        return redirect()->route('transactions.index');
     }
 }

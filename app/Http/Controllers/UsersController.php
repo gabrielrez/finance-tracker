@@ -16,4 +16,18 @@ class UsersController extends Controller
 
         return redirect()->back();
     }
+
+
+
+    public function update()
+    {
+        $attributes = request()->validate([
+            'username' => ['required', 'string', 'max:28']
+        ]);
+
+        user()->username = $attributes['username'];
+        user()->save();
+
+        return redirect()->back();
+    }
 }
