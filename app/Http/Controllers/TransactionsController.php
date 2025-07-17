@@ -25,11 +25,8 @@ class TransactionsController extends Controller
             ->latest('date')
             ->paginate(12);
 
-        $grouped_transactions = $transactions_paginated
-            ->getCollection()
-            ->groupBy(fn($transaction) => Carbon::parse($transaction->date)->format('Y-m-d'))
-            ->map(fn($group) => $group->sortByDesc('created_at'))
-            ->sortKeysDesc();
+        $grouped_transactions = $this->transactionService
+            ->groupByDate($transactions_paginated->getCollection());
 
         return view('app.transactions.index', [
             'grouped_transactions' => $grouped_transactions,

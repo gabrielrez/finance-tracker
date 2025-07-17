@@ -4,7 +4,7 @@ namespace App\Services;
 
 use App\Models\User;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Collection;
 
 class TransactionService
 {
@@ -68,5 +68,21 @@ class TransactionService
             'outcome' => $outcome,
             'balance' => $balance,
         ];
+    }
+
+
+
+    /**
+     * Group transactions by date.
+     * 
+     * @param Collection $transactions
+     * @return Collection
+     */
+    public function groupByDate(Collection $transactions): Collection
+    {
+        return $transactions
+            ->groupBy(fn($transaction) => Carbon::parse($transaction->date)->format('Y-m-d'))
+            ->map(fn($group) => $group->sortByDesc('created_at'))
+            ->sortKeysDesc();
     }
 }
