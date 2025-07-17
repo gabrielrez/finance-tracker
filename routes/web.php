@@ -26,8 +26,8 @@ Route::middleware('auth')->group(function () {
     Route::delete('/categories/{id}', [CategoriesController::class, 'delete'])->name('categories.delete');
 
     Route::get('/transactions', [TransactionsController::class, 'index'])->name('transactions.index');
-    Route::get('/transactions/{id}', [TransactionsController::class, 'show']);
     Route::get('/transactions/new', fn() => view('app.transactions.new'))->name('transactions.create');
+    Route::get('/transactions/{id}', [TransactionsController::class, 'show']);
     Route::post('/transactions', [TransactionsController::class, 'store'])->name('transactions.store');
     Route::delete('/transactions/{id}', [TransactionsController::class, 'delete'])->name('transactions.delete'); 
 
