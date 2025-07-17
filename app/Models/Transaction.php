@@ -11,8 +11,6 @@ class Transaction extends Model
 {
     use HasFactory, Notifiable;
 
-
-
     protected $fillable = [
         'user_id',
         'type',
@@ -22,8 +20,6 @@ class Transaction extends Model
         'date',
         'created_at'
     ];
-
-
 
     protected $casts = [
         'type' => TransactionType::class,
