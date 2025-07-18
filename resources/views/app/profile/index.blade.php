@@ -27,7 +27,13 @@
             <div class="px-4">
                 <h3 class="text-xl font-poppins text-[#9D9EA2]">Settings</h3>
                 <div class="mt-6">
-                    <button class="w-full py-5 cursor-pointer text-[#9d9ea2] font-semibold flex gap-2 items-center hover:underline transaction"><img src="{{ asset('img/icons/profile-edit.svg') }}" class="w-5 h-5"> Edit Profile</button>
+                    <button 
+                        id="edit-profile-btn"
+                        type="button"
+                        class="w-full py-5 cursor-pointer text-[#9d9ea2] font-semibold flex gap-2 items-center hover:underline transaction">
+                        <img src="{{ asset('img/icons/profile-edit.svg') }}" class="w-5 h-5"> 
+                        Edit Profile
+                    </button>
                     
                     <span class="block h-[1px] w-full bg-[#e3e6ea]"></span>
                     
@@ -67,5 +73,68 @@
         </button>
     </div>
 </div>
+
+<div 
+    id="edit-profile-modal" 
+    class="fixed px-4 inset-0 z-50 bg-black/50 flex items-center justify-center hidden"
+    x-cloak
+>
+    <div class="bg-white p-6 rounded-2xl w-full max-w-md">
+        <h3 class="text-lg font-semibold mb-4 text-center font-poppins">Edit Profile</h3>
+
+        <form method="POST" action="{{ route('profile.update') }}">
+            @method('PUT')
+            @csrf
+
+            <label for="username" class="block text-left text-sm font-medium text-gray-700 mb-1">
+                Username
+            </label>
+            <input
+                id="username"
+                name="username"
+                type="text"
+                value="{{ old('username', user()->username) }}"
+                class="w-full px-3 py-2 rounded-xl border border-[#E3E6EA] focus:outline-none focus:ring-2 focus:ring-[#2C18B0] focus:border-transparent"
+                required
+            >
+
+            @error('username')
+                <p class="mt-2 text-sm text-red-600">{{ $message }}</p>
+            @enderror
+
+            <div class="mt-6 flex gap-3">
+                <button 
+                    type="button"
+                    onclick="document.getElementById('edit-profile-modal').classList.add('hidden')"
+                    class="w-1/2 bg-[#EFF1F3] py-2 rounded-xl hover:bg-[#dadee2] cursor-pointer"
+                >
+                    Cancelar
+                </button>
+
+                <button 
+                    type="submit"
+                    class="w-1/2 font-poppins bg-gradient-to-t from-[#2C18B0] to-[#422DC8] text-white py-2 rounded-xl transition duration-150 hover:from-[#251499] hover:to-[#3925b5] cursor-pointer"
+                >
+                    Save
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const editBtn = document.getElementById('edit-profile-btn');
+        const modal   = document.getElementById('edit-profile-modal');
+        if (editBtn && modal) {
+            editBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+                modal.classList.remove('hidden');
+                const input = modal.querySelector('#username');
+                if (input) { setTimeout(() => input.focus(), 50); }
+            });
+        }
+    });
+</script>
 
 <x-footer></x-footer>

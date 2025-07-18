@@ -21,6 +21,7 @@ class UsersController extends Controller
 
     public function update()
     {
+        // For now, we'll just update the username.
         $attributes = request()->validate([
             'username' => ['required', 'string', 'max:28']
         ]);

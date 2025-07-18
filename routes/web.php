@@ -18,7 +18,8 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::middleware('auth')->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-    Route::get('/me', fn() => view('app.profile.index'))->name('profile.index');
+    Route::get('/me', fn() => view('app.profile.index'))->name('profile.index');    
+    Route::put('/me', [UsersController::class, 'update'])->name('profile.update');
     Route::patch('/me/profile-picture', [UsersController::class, 'updateProfilePicture'])->name('profile.picture.update');
 
     Route::get('/categories', fn() => view('app.categories.new'))->name('categories.create');
